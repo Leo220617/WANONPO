@@ -1,0 +1,15 @@
+C:\Users\steve\Documents\Repositorios DYD\GestionGastosWA\SendGridEmail\bin\Release\SendGridEmail.dll.config
+C:\Users\steve\Documents\Repositorios DYD\GestionGastosWA\SendGridEmail\bin\Release\SendGridEmail.dll
+C:\Users\steve\Documents\Repositorios DYD\GestionGastosWA\SendGridEmail\bin\Release\SendGridEmail.pdb
+C:\Users\steve\Documents\Repositorios DYD\GestionGastosWA\SendGridEmail\bin\Release\Newtonsoft.Json.dll
+C:\Users\steve\Documents\Repositorios DYD\GestionGastosWA\SendGridEmail\bin\Release\SendGrid.dll
+C:\Users\steve\Documents\Repositorios DYD\GestionGastosWA\SendGridEmail\bin\Release\SendGrid.SmtpApi.dll
+C:\Users\steve\Documents\Repositorios DYD\GestionGastosWA\SendGridEmail\bin\Release\SendGridMail.dll
+C:\Users\steve\Documents\Repositorios DYD\GestionGastosWA\SendGridEmail\bin\Release\System.Net.Http.Formatting.dll
+C:\Users\steve\Documents\Repositorios DYD\GestionGastosWA\SendGridEmail\bin\Release\Newtonsoft.Json.xml
+C:\Users\steve\Documents\Repositorios DYD\GestionGastosWA\SendGridEmail\bin\Release\System.Net.Http.Formatting.xml
+C:\Users\steve\Documents\Repositorios DYD\GestionGastosWA\SendGridEmail\obj\Release\SendGridEmail.csprojAssemblyReference.cache
+C:\Users\steve\Documents\Repositorios DYD\GestionGastosWA\SendGridEmail\obj\Release\SendGridEmail.csproj.CoreCompileInputs.cache
+C:\Users\steve\Documents\Repositorios DYD\GestionGastosWA\SendGridEmail\obj\Release\SendGridEmail.csproj.CopyComplete
+C:\Users\steve\Documents\Repositorios DYD\GestionGastosWA\SendGridEmail\obj\Release\SendGridEmail.dll
+C:\Users\steve\Documents\Repositorios DYD\GestionGastosWA\SendGridEmail\obj\Release\SendGridEmail.pdb
