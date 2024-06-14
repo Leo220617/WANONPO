@@ -25,7 +25,7 @@ namespace CheckIn.API.Controllers
                 G.AbrirConexionAPP(out db);
                 var Rango = db.Rangos.ToList();
 
-           
+
 
                 if (filtro.Codigo1 > 0)
                 {
@@ -85,6 +85,7 @@ namespace CheckIn.API.Controllers
                     Rango.MontoMinimo = rango.MontoMinimo;
                     Rango.MontoMaximo = rango.MontoMaximo;
                     Rango.CantidadAprobaciones = rango.CantidadAprobaciones;
+                    Rango.Activo = true;
                     db.Rangos.Add(Rango);
                     db.SaveChanges();
 
@@ -129,6 +130,7 @@ namespace CheckIn.API.Controllers
                     Rangos.MontoMinimo = rango.MontoMinimo;
                     Rangos.MontoMaximo = rango.MontoMaximo;
                     Rangos.CantidadAprobaciones = rango.CantidadAprobaciones;
+                    Rangos.Activo = true;
                     db.SaveChanges();
 
                 }
@@ -165,9 +167,20 @@ namespace CheckIn.API.Controllers
 
                 if (Rango != null)
                 {
+                    db.Entry(Rango).State = EntityState.Modified;
 
 
-                    db.Rangos.Remove(Rango);
+                    if (Rango.Activo)
+                    {
+                        Rango.Activo = false;
+
+
+                    }
+                    else
+                    {
+                        Rango.Activo = true;
+
+                    }
                     db.SaveChanges();
 
                 }

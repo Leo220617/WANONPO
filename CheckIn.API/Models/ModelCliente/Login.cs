@@ -13,7 +13,7 @@ namespace CheckIn.API.Models.ModelCliente
 
         public int? idRol { get; set; }
 
-        public int idRango { get; set; }
+    
 
         [StringLength(200)]
         public string Email { get; set; }

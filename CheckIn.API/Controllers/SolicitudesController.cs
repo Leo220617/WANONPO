@@ -92,6 +92,8 @@ namespace CheckIn.API.Controllers
                     Solicitud.Monto = solicitud.Monto;
                     Solicitud.Status = solicitud.Status;
                     Solicitud.Comentarios = solicitud.Comentarios;
+                    Solicitud.Moneda = solicitud.Moneda;
+                    Solicitud.BaseEntry = 0;
                     db.Solicitudes.Add(Solicitud);
                     db.SaveChanges();
 
@@ -138,6 +140,8 @@ namespace CheckIn.API.Controllers
                     Solicitudes.Monto = solicitud.Monto;
                     Solicitudes.Status = solicitud.Status;
                     Solicitudes.Comentarios = solicitud.Comentarios;
+                    Solicitudes.Moneda = solicitud.Moneda;
+                    Solicitudes.BaseEntry = 0;
                     db.SaveChanges();
 
                 }

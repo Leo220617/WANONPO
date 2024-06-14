@@ -36,6 +36,7 @@ namespace CheckIn.API.Models.ModelCliente
         public virtual DbSet<BitacoraLogin> BitacoraLogin { get; set; }
         public virtual DbSet<Rangos> Rangos { get; set; }
         public virtual DbSet<Solicitudes> Solicitudes { get; set; }
+        public virtual DbSet<RangosLogin> RangosLogin { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

@@ -164,6 +164,10 @@ namespace CheckIn.API.Controllers
                 {
                     Login = Login.Where(a => a.Nombre.ToUpper().Contains(filtro.Texto.ToUpper()) || a.Email.ToUpper().Contains(filtro.Texto.ToUpper())).ToList();
                 }
+                if (filtro.Codigo2 > 0)
+                {
+                    Login = Login.Where(a => a.idRol == filtro.Codigo2).ToList();
+                }
                 
 
                 G.CerrarConexionAPP(db);
@@ -253,7 +257,6 @@ namespace CheckIn.API.Controllers
                     Login login = new Login();
                     login.Nombre = User.Nombre;
                     login.Clave = User.Clave;
-                    login.idRango = usuario.idRango;
                     login.Activo = true;
                     login.idRol = usuario.idRol;
                     login.Email = User.Email;
@@ -356,10 +359,7 @@ namespace CheckIn.API.Controllers
                     {
                         User.idLoginAceptacion = usuario.idLoginAceptacion;
                     }
-                    if (usuario.idRango > 0)
-                    {
-                        User.idRango = usuario.idRango;
-                    }
+              
 
                     if (!string.IsNullOrEmpty(usuario.CardCode))
                     {
