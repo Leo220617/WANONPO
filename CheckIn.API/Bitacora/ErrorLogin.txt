@@ -178,3 +178,5 @@
 ------------------------------------------
 13/06/2024 18:52 Clave o Usuario incorrectos =>    en CheckIn.API.Controllers.LoginController.<GetLoginAsync>d__4.MoveNext() en C:\Users\steve\Documents\Repositorios DYD\WANONPO\CheckIn.API\Controllers\LoginController.cs:línea 96
 ------------------------------------------
+25/06/2024 13:50 Clave o Usuario incorrectos =>    en CheckIn.API.Controllers.LoginController.<GetLoginAsync>d__4.MoveNext() en C:\Users\steve\Documents\Repositorios DYD\WANONPO\CheckIn.API\Controllers\LoginController.cs:línea 96
+------------------------------------------
