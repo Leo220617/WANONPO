@@ -22,5 +22,11 @@ namespace CheckIn.API.Models
         public int NumCierre { get; set; }
         public string Texto2 { get; set; }
         public string Texto3 { get; set; }
+        public bool pendientes { get; set; }
+        public bool espera { get; set; }
+        public bool segundoaprobador { get; set; }
+        public bool aprobado { get; set; }
+        public bool rechazado { get; set; }
+        public bool contabilizado { get; set; }
     }
 }

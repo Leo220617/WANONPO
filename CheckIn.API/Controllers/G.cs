@@ -112,6 +112,28 @@ namespace CheckIn.API.Controllers
             catch { }
         }
 
+
+        public string DevuelveCadena(ModelCliente db)
+        {
+            try
+            {
+
+                AbrirConexionAPP(out db);
+                var Conexion = db.ConexionSAP.FirstOrDefault();
+                var sql = "server=" + Conexion.ServerSQL + "; database=" + Conexion.SQLBD + "; uid=" + Conexion.SQLUser + "; pwd=" + Conexion.SQLPass + ";";
+                CerrarConexionAPP(db);
+
+                return sql;
+            }
+            catch (Exception ex)
+            {
+                CerrarConexionAPP(db);
+
+                return ex.InnerException.InnerException.Message + " - " + ex.StackTrace;
+            }
+
+        }
+
         public static string ObtenerConfig(string v)
         {
             try

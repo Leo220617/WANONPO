@@ -76,7 +76,7 @@ namespace CheckIn.API.Controllers
                     {
                         var Objetos = new RangosLogin();
                         Objetos.idRango = item.idRango;
-                        Objetos.idRango = item.idRango;
+                        Objetos.idLogin = item.idLogin;
 
 
                         db.RangosLogin.Add(Objetos);

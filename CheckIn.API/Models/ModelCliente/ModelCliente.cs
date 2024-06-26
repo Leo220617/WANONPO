@@ -37,6 +37,9 @@ namespace CheckIn.API.Models.ModelCliente
         public virtual DbSet<Rangos> Rangos { get; set; }
         public virtual DbSet<Solicitudes> Solicitudes { get; set; }
         public virtual DbSet<RangosLogin> RangosLogin { get; set; }
+        public virtual DbSet<Aprobaciones> Aprobaciones { get; set; }
+        public virtual DbSet<TipoCambios> TipoCambios { get; set; }
+        public virtual DbSet<Adjuntos> Adjuntos { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

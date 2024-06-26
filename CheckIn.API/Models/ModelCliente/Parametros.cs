@@ -36,5 +36,7 @@ namespace CheckIn.API.Models.ModelCliente
         public string IMPEX { get; set; }
 
         public int DiasVencimiento { get; set; }
+
+        public string SQLTipoCambio { get; set; }
     }
 }

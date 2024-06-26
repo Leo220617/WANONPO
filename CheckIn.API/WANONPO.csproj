@@ -276,6 +276,7 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AprobacionesController.cs" />
     <Compile Include="Controllers\BitacoraErroresController.cs" />
     <Compile Include="Controllers\BitacoraLoginController.cs" />
     <Compile Include="Controllers\Conexion.cs" />
@@ -292,6 +293,7 @@
     <Compile Include="Controllers\SeguridadModulosController.cs" />
     <Compile Include="Controllers\SeguridadRolesModulosController.cs" />
     <Compile Include="Controllers\SolicitudesController.cs" />
+    <Compile Include="Controllers\TipoCambioController.cs" />
     <Compile Include="Controllers\TokenGenerator.cs" />
     <Compile Include="Controllers\TokenValidationHandler.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
@@ -304,10 +306,13 @@
     <Compile Include="Helpers\UsersHelper.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\AdjuntosViewModel.cs" />
     <Compile Include="Models\Filtros.cs" />
     <Compile Include="Models\HeaderReportViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\LoginViewModel.cs" />
+    <Compile Include="Models\ModelCliente\Adjuntos.cs" />
+    <Compile Include="Models\ModelCliente\Aprobaciones.cs" />
     <Compile Include="Models\ModelCliente\BitacoraErrores.cs" />
     <Compile Include="Models\ModelCliente\BitacoraLogin.cs" />
     <Compile Include="Models\ModelCliente\ConexionSAP.cs" />
@@ -324,9 +329,11 @@
     <Compile Include="Models\ModelCliente\SeguridadModulos.cs" />
     <Compile Include="Models\ModelCliente\SeguridadRolesModulos.cs" />
     <Compile Include="Models\ModelCliente\Solicitudes.cs" />
+    <Compile Include="Models\ModelCliente\TipoCambios.cs" />
     <Compile Include="Models\ModelMain\LicEmpresas.cs" />
     <Compile Include="Models\ModelMain\LicUsuarios.cs" />
     <Compile Include="Models\ModelMain\ModelLicencias.cs" />
+    <Compile Include="Models\SolicitudesViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\ApplicationOAuthProvider.cs" />
     <Compile Include="Results\ChallengeResult.cs" />
