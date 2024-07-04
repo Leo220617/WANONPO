@@ -40,6 +40,7 @@ namespace CheckIn.API.Models.ModelCliente
         public virtual DbSet<Aprobaciones> Aprobaciones { get; set; }
         public virtual DbSet<TipoCambios> TipoCambios { get; set; }
         public virtual DbSet<Adjuntos> Adjuntos { get; set; }
+        public virtual DbSet<Facturas> Facturas { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

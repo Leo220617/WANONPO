@@ -39,7 +39,7 @@ namespace CheckIn.API.Controllers
                     a.Status,
                     a.Moneda,
                     a.BaseEntry,
-                    a.Comentarios
+                    a.Comentarios 
 
                 }).Where(a => (filtro.FechaInicio != time ? a.Fecha >= filtro.FechaInicio : true) && (filtro.FechaFinal != time ? a.Fecha <= filtro.FechaFinal : true)).ToList();
 
@@ -75,7 +75,24 @@ namespace CheckIn.API.Controllers
                 G.AbrirConexionAPP(out db);
 
 
-                var Solicitud = db.Solicitudes.Where(a => a.id == id).FirstOrDefault();
+                var Solicitud = db.Solicitudes.Select(a => new
+                {
+
+
+                    a.id,
+                    a.idUsuarioCreador,
+                    a.idTipoGasto,
+                    a.idRango,
+                    a.Fecha,
+                    a.FechaAceptacion,
+                    a.Monto,
+                    a.Status,
+                    a.Moneda,
+                    a.BaseEntry,
+                    a.Comentarios,
+                    Adjuntos = db.Adjuntos.Where(b => b.idEncabezado == a.id).ToList()
+
+                }).Where(a => a.id == id).FirstOrDefault();
 
 
                 if (Solicitud == null)
@@ -261,7 +278,7 @@ namespace CheckIn.API.Controllers
                              
                         }
                     }
-                    else
+                    else // Si viene R de rechazado
                     {
                         var Aprobaciones = db.Aprobaciones.Where(a => a.idSolicitud == Solicitudes.id).Count();
                         if(Aprobaciones > 0)
@@ -282,59 +299,89 @@ namespace CheckIn.API.Controllers
                         }
                         
                     }
+
+
                     if (solicitud.Generar)
                     {
-                        if (solicitud.Adjuntos == null)
+                        //if (solicitud.Adjuntos == null)
+                        //{
+                        //    solicitud.Adjuntos = new List<AdjuntosViewModel>();
+                        //}
+                        //foreach (var adjunto in solicitud.Adjuntos)
+                        //{
+                        //    Adjuntos adj = new Adjuntos();
+                        //    adj.idEncabezado = Solicitudes.id;
+
+                        //    string base64Data = adjunto.base64Img;
+                        //    string base64String;
+                        //    string mimeType = "";
+
+                        //    if (base64Data.StartsWith("data:image/jpeg;base64,"))
+                        //    {
+                        //        mimeType = "image/jpeg";
+                        //        base64String = base64Data.Replace("data:image/jpeg;base64,", "");
+                        //    }
+                        //    else if (base64Data.StartsWith("data:image/png;base64,"))
+                        //    {
+                        //        mimeType = "image/png";
+                        //        base64String = base64Data.Replace("data:image/png;base64,", "");
+                        //    }
+                        //    else if (base64Data.StartsWith("data:application/pdf;base64,"))
+                        //    {
+                        //        mimeType = "application/pdf";
+                        //        base64String = base64Data.Replace("data:application/pdf;base64,", "");
+                        //    }
+                        //    else if (base64Data.StartsWith("data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,"))
+                        //    {
+                        //        mimeType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+                        //        base64String = base64Data.Replace("data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,", "");
+                        //    }
+                        //    else if (base64Data.StartsWith("data:application/vnd.openxmlformats-officedocument.wordprocessingml.document;base64,"))
+                        //    {
+                        //        mimeType = "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
+                        //        base64String = base64Data.Replace("data:application/vnd.openxmlformats-officedocument.wordprocessingml.document;base64,", "");
+                        //    }
+                        //    else
+                        //    {
+                        //        throw new Exception("No existe este tipo de archivo");
+                        //    }
+
+                        //    adj.Tipo = 1; 
+                        //    byte[] hex = Convert.FromBase64String(base64String);
+                        //    adj.Base64 = hex;
+                        //    adj.MimeType = mimeType;  
+                        //    db.Adjuntos.Add(adj);
+                        //    db.SaveChanges();
+                        //}
+                        var Facturas = db.Facturas.Where(a => a.idSolicitud == Solicitudes.id).ToList();
+
+                        foreach (var item in Facturas)
                         {
-                            solicitud.Adjuntos = new List<AdjuntosViewModel>();
-                        }
-                        foreach (var adjunto in solicitud.Adjuntos)
-                        {
-                            Adjuntos adj = new Adjuntos();
-                            adj.idEncabezado = Solicitudes.id;
-
-                            string base64Data = adjunto.base64Img;
-                            string base64String;
-                            string mimeType = "";
-
-                            if (base64Data.StartsWith("data:image/jpeg;base64,"))
-                            {
-                                mimeType = "image/jpeg";
-                                base64String = base64Data.Replace("data:image/jpeg;base64,", "");
-                            }
-                            else if (base64Data.StartsWith("data:image/png;base64,"))
-                            {
-                                mimeType = "image/png";
-                                base64String = base64Data.Replace("data:image/png;base64,", "");
-                            }
-                            else if (base64Data.StartsWith("data:application/pdf;base64,"))
-                            {
-                                mimeType = "application/pdf";
-                                base64String = base64Data.Replace("data:application/pdf;base64,", "");
-                            }
-                            else if (base64Data.StartsWith("data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,"))
-                            {
-                                mimeType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
-                                base64String = base64Data.Replace("data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,", "");
-                            }
-                            else if (base64Data.StartsWith("data:application/vnd.openxmlformats-officedocument.wordprocessingml.document;base64,"))
-                            {
-                                mimeType = "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
-                                base64String = base64Data.Replace("data:application/vnd.openxmlformats-officedocument.wordprocessingml.document;base64,", "");
-                            }
-                            else
-                            {
-                                throw new Exception("No existe este tipo de archivo");
-                            }
-
-                            adj.Tipo = 1; 
-                            byte[] hex = Convert.FromBase64String(base64String);
-                            adj.Base64 = hex;
-                            adj.MimeType = mimeType; 
-
-                            db.Adjuntos.Add(adj);
+                            db.Facturas.Remove(item);
                             db.SaveChanges();
                         }
+
+
+                        var i = 0;
+                     
+                        foreach (var factura in solicitud.Facturas)
+                        {
+                            Facturas Factura = new Facturas();
+                            Factura.idSolicitud = Solicitudes.id;
+                            Factura.CedulaProveedor = factura.CedulaProveedor;
+                            Factura.NomProveedor = factura.NomProveedor;
+                            Factura.NumFactura = factura.NumFactura;
+                            Factura.Fecha = factura.Fecha;
+                            Factura.Comentarios = factura.Comentarios;
+                            byte[] hex = Convert.FromBase64String(factura.PDF.Replace("data:image/jpeg;base64,", "").Replace("data:image/png;base64,", ""));
+                            Factura.PDF = hex;
+                            db.Facturas.Add(Factura);
+                            db.SaveChanges();
+                            i++;
+                            
+                        }
+
+
                     }
 
                     db.SaveChanges();

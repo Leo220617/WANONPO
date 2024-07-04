@@ -307,6 +307,8 @@
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AdjuntosViewModel.cs" />
+    <Compile Include="Models\ModelCliente\Facturas.cs" />
+    <Compile Include="Models\FacturasViewModel.cs" />
     <Compile Include="Models\Filtros.cs" />
     <Compile Include="Models\HeaderReportViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
