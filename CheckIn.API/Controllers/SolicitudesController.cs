@@ -39,7 +39,8 @@ namespace CheckIn.API.Controllers
                     a.Status,
                     a.Moneda,
                     a.BaseEntry,
-                    a.Comentarios 
+                    a.Comentarios,
+                    Facturas = db.Facturas.Where(b => b.idSolicitud == a.id).ToList()
 
                 }).Where(a => (filtro.FechaInicio != time ? a.Fecha >= filtro.FechaInicio : true) && (filtro.FechaFinal != time ? a.Fecha <= filtro.FechaFinal : true)).ToList();
 
@@ -90,7 +91,7 @@ namespace CheckIn.API.Controllers
                     a.Moneda,
                     a.BaseEntry,
                     a.Comentarios,
-                    Adjuntos = db.Adjuntos.Where(b => b.idEncabezado == a.id).ToList()
+                    Facturas = db.Facturas.Where(b => b.idSolicitud == a.id).ToList()
 
                 }).Where(a => a.id == id).FirstOrDefault();
 
@@ -375,6 +376,7 @@ namespace CheckIn.API.Controllers
                             Factura.Comentarios = factura.Comentarios;
                             byte[] hex = Convert.FromBase64String(factura.PDF.Replace("data:image/jpeg;base64,", "").Replace("data:image/png;base64,", ""));
                             Factura.PDF = hex;
+                            Factura.Monto = factura.Monto;
                             db.Facturas.Add(Factura);
                             db.SaveChanges();
                             i++;

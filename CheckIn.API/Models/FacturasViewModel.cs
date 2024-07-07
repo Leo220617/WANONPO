@@ -15,5 +15,6 @@ namespace CheckIn.API.Models
         public DateTime Fecha { get; set; }
         public string Comentarios { get; set; }
         public string PDF { get; set; }
+        public decimal Monto { get; set; }
     }
 }
