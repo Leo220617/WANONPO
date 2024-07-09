@@ -20,7 +20,7 @@ namespace CheckIn.API.Models.ModelCliente
         public string Moneda { get; set; }
         public int BaseEntry { get; set; }
         public string Comentarios { get; set; }
-
+        public string ComentariosAprobador { get; set; }
 
     }
 }

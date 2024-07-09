@@ -40,6 +40,7 @@ namespace CheckIn.API.Controllers
                     a.Moneda,
                     a.BaseEntry,
                     a.Comentarios,
+                    a.ComentariosAprobador,
                     Facturas = db.Facturas.Where(b => b.idSolicitud == a.id).ToList()
 
                 }).Where(a => (filtro.FechaInicio != time ? a.Fecha >= filtro.FechaInicio : true) && (filtro.FechaFinal != time ? a.Fecha <= filtro.FechaFinal : true)).ToList();
@@ -91,6 +92,7 @@ namespace CheckIn.API.Controllers
                     a.Moneda,
                     a.BaseEntry,
                     a.Comentarios,
+                    a.ComentariosAprobador,
                     Facturas = db.Facturas.Where(b => b.idSolicitud == a.id).ToList()
 
                 }).Where(a => a.id == id).FirstOrDefault();
@@ -131,6 +133,7 @@ namespace CheckIn.API.Controllers
                     Solicitud.Comentarios = solicitud.Comentarios;
                     Solicitud.Moneda = solicitud.Moneda;
                     Solicitud.BaseEntry = 0;
+                    Solicitud.ComentariosAprobador = solicitud.ComentariosAprobador;
                     if(solicitud.Moneda == "USD")
                     {
                         Solicitud.idRango = db.Rangos.Where(a => a.idTipoGasto == solicitud.idTipoGasto && a.MontoMinimo <= solicitud.Monto && a.MontoMaximo >= solicitud.Monto).FirstOrDefault() == null ? 0 : db.Rangos.Where(a => a.idTipoGasto == solicitud.idTipoGasto && a.MontoMinimo <= solicitud.Monto && a.MontoMaximo >= solicitud.Monto).FirstOrDefault().id;
@@ -198,20 +201,35 @@ namespace CheckIn.API.Controllers
                     {
                         Solicitudes.Moneda = solicitud.Moneda; 
                     }
-
-                    if (solicitud.Moneda == "USD")
+                    if (!string.IsNullOrEmpty(solicitud.ComentariosAprobador))
                     {
-                        Solicitudes.idRango = db.Rangos.Where(a => a.idTipoGasto == solicitud.idTipoGasto && a.MontoMinimo <= solicitud.Monto && a.MontoMaximo >= solicitud.Monto).FirstOrDefault() == null ? 0 : db.Rangos.Where(a => a.idTipoGasto == solicitud.idTipoGasto && a.MontoMinimo <= solicitud.Monto && a.MontoMaximo >= solicitud.Monto).FirstOrDefault().id;
+                        Solicitudes.ComentariosAprobador = solicitud.ComentariosAprobador;
                     }
-                    else
+                    if(!string.IsNullOrEmpty(solicitud.Moneda))
                     {
-                        var Fecha = Solicitudes.Fecha.Date;
-                        var TipoCambio = db.TipoCambios.Where(a => a.Moneda == "USD" && a.Fecha == Fecha).FirstOrDefault();
+                        if (Solicitudes.Moneda == "USD")
+                        {
+                            if(solicitud.idTipoGasto > 0 && solicitud.idTipoGasto != null)
+                            {
+                                Solicitudes.idRango = db.Rangos.Where(a => a.idTipoGasto == solicitud.idTipoGasto && a.MontoMinimo <= solicitud.Monto && a.MontoMaximo >= solicitud.Monto).FirstOrDefault() == null ? 0 : db.Rangos.Where(a => a.idTipoGasto == solicitud.idTipoGasto && a.MontoMinimo <= solicitud.Monto && a.MontoMaximo >= solicitud.Monto).FirstOrDefault().id;
 
-                        Solicitudes.idRango = db.Rangos.Where(a => a.idTipoGasto == solicitud.idTipoGasto && a.MontoMinimo <= (solicitud.Monto / TipoCambio.TipoCambio) && a.MontoMaximo >= (solicitud.Monto / TipoCambio.TipoCambio)).FirstOrDefault() == null ? 0 : db.Rangos.Where(a => a.idTipoGasto == solicitud.idTipoGasto && a.MontoMinimo <= (solicitud.Monto / TipoCambio.TipoCambio) && a.MontoMaximo >= (solicitud.Monto / TipoCambio.TipoCambio)).FirstOrDefault().id;
+                            }
+                        }
+                        else
+                        {
+                            if (solicitud.idTipoGasto > 0 && solicitud.idTipoGasto != null)
+                            {
+                                var Fecha = Solicitudes.Fecha.Date;
+                                var TipoCambio = db.TipoCambios.Where(a => a.Moneda == "USD" && a.Fecha == Fecha).FirstOrDefault();
+
+                                Solicitudes.idRango = db.Rangos.Where(a => a.idTipoGasto == solicitud.idTipoGasto && a.MontoMinimo <= (solicitud.Monto / TipoCambio.TipoCambio) && a.MontoMaximo >= (solicitud.Monto / TipoCambio.TipoCambio)).FirstOrDefault() == null ? 0 : db.Rangos.Where(a => a.idTipoGasto == solicitud.idTipoGasto && a.MontoMinimo <= (solicitud.Monto / TipoCambio.TipoCambio) && a.MontoMaximo >= (solicitud.Monto / TipoCambio.TipoCambio)).FirstOrDefault().id;
+
+                            }
 
 
+                        }
                     }
+                 
 
                     var Rango = db.Rangos.Where(a => a.id == Solicitudes.idRango).FirstOrDefault();
                     if (solicitud.Status == "A")
@@ -374,7 +392,7 @@ namespace CheckIn.API.Controllers
                             Factura.NumFactura = factura.NumFactura;
                             Factura.Fecha = factura.Fecha;
                             Factura.Comentarios = factura.Comentarios;
-                            byte[] hex = Convert.FromBase64String(factura.PDF.Replace("data:image/jpeg;base64,", "").Replace("data:image/png;base64,", ""));
+                            byte[] hex = Convert.FromBase64String(factura.PDF.Replace("data:application/pdf;base64,", ""));
                             Factura.PDF = hex;
                             Factura.Monto = factura.Monto;
                             db.Facturas.Add(Factura);
