@@ -17,5 +17,6 @@ namespace CheckIn.API.Models.ModelCliente
         public decimal MontoMaximo { get; set; }
         public int CantidadAprobaciones { get; set; }
         public bool Activo { get; set; }
+        public decimal Margen { get; set; }
     }
 }

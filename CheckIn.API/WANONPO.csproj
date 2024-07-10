@@ -322,6 +322,7 @@
     <Compile Include="Models\ModelCliente\Dimensiones.cs" />
     <Compile Include="Models\ModelCliente\Gastos.cs" />
     <Compile Include="Models\ModelCliente\Login.cs" />
+    <Compile Include="Models\ModelCliente\Logs.cs" />
     <Compile Include="Models\ModelCliente\ModelCliente.cs" />
     <Compile Include="Models\ModelCliente\NormasReparto.cs" />
     <Compile Include="Models\ModelCliente\Parametros.cs" />

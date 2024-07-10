@@ -21,6 +21,7 @@ namespace CheckIn.API.Models.ModelCliente
         public int BaseEntry { get; set; }
         public string Comentarios { get; set; }
         public string ComentariosAprobador { get; set; }
+        public decimal TotalFacturas { get; set; }
 
     }
 }

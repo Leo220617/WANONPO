@@ -85,6 +85,7 @@ namespace CheckIn.API.Controllers
                     Rango.MontoMinimo = rango.MontoMinimo;
                     Rango.MontoMaximo = rango.MontoMaximo;
                     Rango.CantidadAprobaciones = rango.CantidadAprobaciones;
+                    Rango.Margen = rango.Margen;
                     Rango.Activo = true;
                     db.Rangos.Add(Rango);
                     db.SaveChanges();
@@ -130,6 +131,7 @@ namespace CheckIn.API.Controllers
                     Rangos.MontoMinimo = rango.MontoMinimo;
                     Rangos.MontoMaximo = rango.MontoMaximo;
                     Rangos.CantidadAprobaciones = rango.CantidadAprobaciones;
+                    Rangos.Margen = rango.Margen;
                     Rangos.Activo = true;
                     db.SaveChanges();
 

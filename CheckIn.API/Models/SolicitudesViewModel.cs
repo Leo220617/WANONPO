@@ -22,7 +22,8 @@ namespace CheckIn.API.Models
         public int idUsuarioAprobador { get; set; }
         public bool Generar { get; set; }
         public string ComentariosAprobador { get; set; }
-        public List<AdjuntosViewModel> Adjuntos { get; set; }
+        public decimal TotalFacturas { get; set; }
+ 
         public List<FacturasViewModel> Facturas { get; set; }
     }
 }

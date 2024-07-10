@@ -28,5 +28,7 @@ namespace CheckIn.API.Models
         public bool aprobado { get; set; }
         public bool rechazado { get; set; }
         public bool contabilizado { get; set; }
+        public bool excedido { get; set; }
+        public bool listo { get; set; }
     }
 }

@@ -41,7 +41,9 @@ namespace CheckIn.API.Controllers
                     a.BaseEntry,
                     a.Comentarios,
                     a.ComentariosAprobador,
-                    Facturas = db.Facturas.Where(b => b.idSolicitud == a.id).ToList()
+                    a.TotalFacturas,
+                    Facturas = db.Facturas.Where(b => b.idSolicitud == a.id).ToList(),
+                    Logs = db.Logs.Where(e => e.idSolicitud == a.id).ToList()
 
                 }).Where(a => (filtro.FechaInicio != time ? a.Fecha >= filtro.FechaInicio : true) && (filtro.FechaFinal != time ? a.Fecha <= filtro.FechaFinal : true)).ToList();
 
@@ -56,7 +58,8 @@ namespace CheckIn.API.Controllers
                 }
 
                 Solicitud = Solicitud.Where(a => (filtro.pendientes == true ? a.Status == "P" : false) || (filtro.espera == true ? a.Status == "G" : false) || (filtro.segundoaprobador == true ? a.Status == "S" : false)
-            || (filtro.aprobado == true ? a.Status == "A" : false) || (filtro.rechazado == true ? a.Status == "R" : false) || (filtro.contabilizado == true ? a.Status == "C" : false)
+            || (filtro.aprobado == true ? a.Status == "A" : false) || (filtro.rechazado == true ? a.Status == "R" : false) || (filtro.contabilizado == true ? a.Status == "C" : false) || (filtro.excedido == true ? a.Status == "E" : false)
+            || (filtro.listo == true ? a.Status == "L" : false)
             ).ToList();
                 G.CerrarConexionAPP(db);
                 return Request.CreateResponse(HttpStatusCode.OK, Solicitud);
@@ -93,7 +96,9 @@ namespace CheckIn.API.Controllers
                     a.BaseEntry,
                     a.Comentarios,
                     a.ComentariosAprobador,
-                    Facturas = db.Facturas.Where(b => b.idSolicitud == a.id).ToList()
+                    a.TotalFacturas,
+                    Facturas = db.Facturas.Where(b => b.idSolicitud == a.id).ToList(),
+                    Logs = db.Logs.Where(e => e.idSolicitud == a.id).ToList()
 
                 }).Where(a => a.id == id).FirstOrDefault();
 
@@ -134,7 +139,8 @@ namespace CheckIn.API.Controllers
                     Solicitud.Moneda = solicitud.Moneda;
                     Solicitud.BaseEntry = 0;
                     Solicitud.ComentariosAprobador = solicitud.ComentariosAprobador;
-                    if(solicitud.Moneda == "USD")
+                    Solicitud.TotalFacturas = 0;
+                    if (solicitud.Moneda == "USD")
                     {
                         Solicitud.idRango = db.Rangos.Where(a => a.idTipoGasto == solicitud.idTipoGasto && a.MontoMinimo <= solicitud.Monto && a.MontoMaximo >= solicitud.Monto).FirstOrDefault() == null ? 0 : db.Rangos.Where(a => a.idTipoGasto == solicitud.idTipoGasto && a.MontoMinimo <= solicitud.Monto && a.MontoMaximo >= solicitud.Monto).FirstOrDefault().id;
                     }
@@ -147,9 +153,33 @@ namespace CheckIn.API.Controllers
 
 
                     }
-                  
+
+
                     db.Solicitudes.Add(Solicitud);
                     db.SaveChanges();
+
+                    var Usuario = db.Login.Where(a => a.id == Solicitud.idUsuarioCreador).FirstOrDefault();
+
+                    if (Solicitud.Status == "P")
+                    {
+                        Logs log = new Logs();
+                        log.idSolicitud = Solicitud.id;
+                        log.Fecha = DateTime.Now;
+                        log.Detalle = "El usuario " + Usuario.Nombre + " ha creado la solicitud de compra a la hora correspondiente";
+                        db.Logs.Add(log);
+                        db.SaveChanges();
+                    }
+                    else
+                    {
+                        Logs log = new Logs();
+                        log.idSolicitud = Solicitud.id;
+                        log.Fecha = DateTime.Now;
+                        log.Detalle = "El usuario " + Usuario.Nombre + " ha enviado la solicitud de compra a aprobación a la hora correspondiente";
+                        db.Logs.Add(log);
+                        db.SaveChanges();
+                    }
+
+
 
                 }
                 else
@@ -184,32 +214,35 @@ namespace CheckIn.API.Controllers
 
                 var Solicitudes = db.Solicitudes.Where(a => a.id == solicitud.id).FirstOrDefault();
 
+
                 if (Solicitudes != null)
                 {
-                    db.Entry(Solicitudes).State = EntityState.Modified; 
-                    if(solicitud.Monto > 0 && solicitud.Monto != Solicitudes.Monto)
+
+                    var Usuario = db.Login.Where(a => a.id == Solicitudes.idUsuarioCreador).FirstOrDefault();
+                    db.Entry(Solicitudes).State = EntityState.Modified;
+                    if (solicitud.Monto > 0 && solicitud.Monto != Solicitudes.Monto)
                     {
                         Solicitudes.Monto = solicitud.Monto;
                     }
 
-                    if(!string.IsNullOrEmpty(solicitud.Comentarios))
+                    if (!string.IsNullOrEmpty(solicitud.Comentarios))
                     {
                         Solicitudes.Comentarios = solicitud.Comentarios;
                     }
 
                     if (!string.IsNullOrEmpty(solicitud.Moneda))
                     {
-                        Solicitudes.Moneda = solicitud.Moneda; 
+                        Solicitudes.Moneda = solicitud.Moneda;
                     }
                     if (!string.IsNullOrEmpty(solicitud.ComentariosAprobador))
                     {
                         Solicitudes.ComentariosAprobador = solicitud.ComentariosAprobador;
                     }
-                    if(!string.IsNullOrEmpty(solicitud.Moneda))
+                    if (!string.IsNullOrEmpty(solicitud.Moneda))
                     {
                         if (Solicitudes.Moneda == "USD")
                         {
-                            if(solicitud.idTipoGasto > 0 && solicitud.idTipoGasto != null)
+                            if (solicitud.idTipoGasto > 0 && solicitud.idTipoGasto != null)
                             {
                                 Solicitudes.idRango = db.Rangos.Where(a => a.idTipoGasto == solicitud.idTipoGasto && a.MontoMinimo <= solicitud.Monto && a.MontoMaximo >= solicitud.Monto).FirstOrDefault() == null ? 0 : db.Rangos.Where(a => a.idTipoGasto == solicitud.idTipoGasto && a.MontoMinimo <= solicitud.Monto && a.MontoMaximo >= solicitud.Monto).FirstOrDefault().id;
 
@@ -229,21 +262,21 @@ namespace CheckIn.API.Controllers
 
                         }
                     }
-                 
+
 
                     var Rango = db.Rangos.Where(a => a.id == Solicitudes.idRango).FirstOrDefault();
                     if (solicitud.Status == "A")
                     {
                         if (Rango != null)
-                        { 
-                            var Aprobaciones = db.Aprobaciones.Where(a =>  a.idSolicitud == Solicitudes.id).Count();
+                        {
+                            var Aprobaciones = db.Aprobaciones.Where(a => a.idSolicitud == Solicitudes.id).Count();
 
-                            if(Solicitudes.Status == "S")
+                            if (Solicitudes.Status == "S")
                             {
                                 if (Rango.CantidadAprobaciones > 1 && Aprobaciones < Rango.CantidadAprobaciones)
                                 {
                                     var AprobacionAnterior = db.Aprobaciones.Where(a => a.idSolicitud == Solicitudes.id).FirstOrDefault();
-                                    if(AprobacionAnterior.idLogin != solicitud.idUsuarioAprobador)
+                                    if (AprobacionAnterior.idLogin != solicitud.idUsuarioAprobador)
                                     {
                                         var Objetos = new Aprobaciones();
                                         Objetos.idLogin = solicitud.idUsuarioAprobador;
@@ -252,20 +285,28 @@ namespace CheckIn.API.Controllers
                                         db.Aprobaciones.Add(Objetos);
                                         db.SaveChanges();
                                         Solicitudes.Status = solicitud.Status;
+
+                                        var UsuarioAprobador = db.Login.Where(a => a.id == Objetos.idLogin).FirstOrDefault();
+                                        Logs log = new Logs();
+                                        log.idSolicitud = Solicitudes.id;
+                                        log.Fecha = DateTime.Now;
+                                        log.Detalle = "El usuario " + UsuarioAprobador.Nombre + " ha aprobado la segunda aprobación de la solicitud de compra a la hora correspondiente";
+                                        db.Logs.Add(log);
+                                        db.SaveChanges();
                                     }
                                     else
                                     {
                                         throw new Exception("Esta solicitud ya ha sido aprobada por este aprobador");
                                     }
 
-                                   
+
                                 }
                                 else
                                 {
                                     throw new Exception("El rango no tiene definido mas de una aprobacion o la solicitud ya tiene todas las aprobaciones");
                                 }
                             }
-                            else if(Solicitudes.Status == "G")
+                            else if (Solicitudes.Status == "G")
                             {
                                 if (Aprobaciones == 0 && Rango.CantidadAprobaciones > 0)
                                 {
@@ -277,15 +318,31 @@ namespace CheckIn.API.Controllers
                                     db.SaveChanges();
 
                                     Aprobaciones++;
-                                    if(Aprobaciones == Rango.CantidadAprobaciones)
+                                    var UsuarioAprobador = db.Login.Where(a => a.id == Objetos.idLogin).FirstOrDefault();
+
+                                    if (Aprobaciones == Rango.CantidadAprobaciones)
                                     {
                                         Solicitudes.Status = solicitud.Status;
+
+                                        Logs log = new Logs();
+                                        log.idSolicitud = Solicitudes.id;
+                                        log.Fecha = DateTime.Now;
+                                        log.Detalle = "El usuario " + UsuarioAprobador.Nombre + " ha aprobado la solicitud de compra a la hora correspondiente";
+                                        db.Logs.Add(log);
+                                        db.SaveChanges();
                                     }
                                     else
                                     {
                                         Solicitudes.Status = "S";
+
+                                        Logs log = new Logs();
+                                        log.idSolicitud = Solicitudes.id;
+                                        log.Fecha = DateTime.Now;
+                                        log.Detalle = "El usuario " + UsuarioAprobador.Nombre + " ha aprobado la primera aprobación de la solicitud de compra a la hora correspondiente";
+                                        db.Logs.Add(log);
+                                        db.SaveChanges();
                                     }
-                                    
+
                                 }
                                 else
                                 {
@@ -293,19 +350,42 @@ namespace CheckIn.API.Controllers
                                 }
                             }
 
-                           
-                             
+
+
                         }
                     }
-                    else // Si viene R de rechazado
+                    else if(solicitud.Status == "R" || solicitud.Status == "G") // Si viene R de rechazado
                     {
                         var Aprobaciones = db.Aprobaciones.Where(a => a.idSolicitud == Solicitudes.id).Count();
-                        if(Aprobaciones > 0)
+
+                        if (solicitud.Status == "G")
+                        {
+
+                            Logs log = new Logs();
+                            log.idSolicitud = Solicitudes.id;
+                            log.Fecha = DateTime.Now;
+                            log.Detalle = "El usuario " + Usuario.Nombre + " ha enviado la solicitud de compra a aprobación a la hora correspondiente";
+                            db.Logs.Add(log);
+                            db.SaveChanges();
+                        }
+                        else
+                        {
+                            var UsuarioAprobador = db.Login.Where(a => a.id == solicitud.idUsuarioAprobador).FirstOrDefault();
+                            Logs log = new Logs();
+                            log.idSolicitud = Solicitudes.id;
+                            log.Fecha = DateTime.Now;
+                            log.Detalle = "El usuario " + UsuarioAprobador.Nombre + " ha rechazado la solicitud de compra a la hora correspondiente";
+                            db.Logs.Add(log);
+                            db.SaveChanges();
+                        }
+
+                        if (Aprobaciones > 0)
                         {
                             var AprobacionAnterior = db.Aprobaciones.Where(a => a.idSolicitud == Solicitudes.id).FirstOrDefault();
                             if (AprobacionAnterior.idLogin != solicitud.idUsuarioAprobador)
                             {
                                 Solicitudes.Status = solicitud.Status;
+
                             }
                             else
                             {
@@ -316,62 +396,14 @@ namespace CheckIn.API.Controllers
                         {
                             Solicitudes.Status = solicitud.Status;
                         }
-                        
+
                     }
 
 
-                    if (solicitud.Generar)
+
+
+                    if (solicitud.Facturas != null)
                     {
-                        //if (solicitud.Adjuntos == null)
-                        //{
-                        //    solicitud.Adjuntos = new List<AdjuntosViewModel>();
-                        //}
-                        //foreach (var adjunto in solicitud.Adjuntos)
-                        //{
-                        //    Adjuntos adj = new Adjuntos();
-                        //    adj.idEncabezado = Solicitudes.id;
-
-                        //    string base64Data = adjunto.base64Img;
-                        //    string base64String;
-                        //    string mimeType = "";
-
-                        //    if (base64Data.StartsWith("data:image/jpeg;base64,"))
-                        //    {
-                        //        mimeType = "image/jpeg";
-                        //        base64String = base64Data.Replace("data:image/jpeg;base64,", "");
-                        //    }
-                        //    else if (base64Data.StartsWith("data:image/png;base64,"))
-                        //    {
-                        //        mimeType = "image/png";
-                        //        base64String = base64Data.Replace("data:image/png;base64,", "");
-                        //    }
-                        //    else if (base64Data.StartsWith("data:application/pdf;base64,"))
-                        //    {
-                        //        mimeType = "application/pdf";
-                        //        base64String = base64Data.Replace("data:application/pdf;base64,", "");
-                        //    }
-                        //    else if (base64Data.StartsWith("data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,"))
-                        //    {
-                        //        mimeType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
-                        //        base64String = base64Data.Replace("data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,", "");
-                        //    }
-                        //    else if (base64Data.StartsWith("data:application/vnd.openxmlformats-officedocument.wordprocessingml.document;base64,"))
-                        //    {
-                        //        mimeType = "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
-                        //        base64String = base64Data.Replace("data:application/vnd.openxmlformats-officedocument.wordprocessingml.document;base64,", "");
-                        //    }
-                        //    else
-                        //    {
-                        //        throw new Exception("No existe este tipo de archivo");
-                        //    }
-
-                        //    adj.Tipo = 1; 
-                        //    byte[] hex = Convert.FromBase64String(base64String);
-                        //    adj.Base64 = hex;
-                        //    adj.MimeType = mimeType;  
-                        //    db.Adjuntos.Add(adj);
-                        //    db.SaveChanges();
-                        //}
                         var Facturas = db.Facturas.Where(a => a.idSolicitud == Solicitudes.id).ToList();
 
                         foreach (var item in Facturas)
@@ -382,7 +414,9 @@ namespace CheckIn.API.Controllers
 
 
                         var i = 0;
-                     
+                        var TotalFacturas = 0.00m;
+
+
                         foreach (var factura in solicitud.Facturas)
                         {
                             Facturas Factura = new Facturas();
@@ -395,16 +429,91 @@ namespace CheckIn.API.Controllers
                             byte[] hex = Convert.FromBase64String(factura.PDF.Replace("data:application/pdf;base64,", ""));
                             Factura.PDF = hex;
                             Factura.Monto = factura.Monto;
+                            TotalFacturas += factura.Monto;
                             db.Facturas.Add(Factura);
                             db.SaveChanges();
                             i++;
-                            
+
                         }
+
+                        Logs log = new Logs();
+                        log.idSolicitud = Solicitudes.id;
+                        log.Fecha = DateTime.Now;
+                        log.Detalle = "El usuario " + Usuario.Nombre + " ha adjuntado las facturas a la solicitud de compra a la hora correspondiente";
+                        db.Logs.Add(log);
+                        db.SaveChanges();
+
+                        Solicitudes.TotalFacturas = TotalFacturas;
+
 
 
                     }
 
+                    if (Solicitudes.TotalFacturas > (Solicitudes.Monto))
+                    {
+                        Logs log = new Logs();
+                        log.idSolicitud = Solicitudes.id;
+                        log.Fecha = DateTime.Now;
+                        log.Detalle = "El usuario " + Usuario.Nombre + " ha excedido en " + (Solicitudes.Monto - Solicitudes.TotalFacturas) + " el total de la solicitud";
+                        db.Logs.Add(log);
+                        db.SaveChanges();
+                    }
+
+                    if (Solicitudes.TotalFacturas > (Solicitudes.Monto + (Solicitudes.Monto * (Rango.Margen / 100))))
+                    {
+                        Solicitudes.Status = "E";
+                        Solicitudes Solicitud = new Solicitudes();
+                        Solicitud = new Solicitudes();
+                        Solicitud.BaseEntry = Solicitudes.id;
+                        Solicitud.idUsuarioCreador = Solicitudes.idUsuarioCreador;
+                        Solicitud.idTipoGasto = Solicitudes.idTipoGasto;
+                        Solicitud.Fecha = DateTime.Now;
+                        Solicitud.FechaAceptacion = DateTime.Now;
+                        Solicitud.Monto = Solicitudes.TotalFacturas;
+                        Solicitud.Status = "P";
+                        Solicitud.Comentarios = Solicitudes.Comentarios;
+                        Solicitud.Moneda = Solicitudes.Moneda;
+                        Solicitud.ComentariosAprobador = "";
+                        Solicitud.TotalFacturas = 0;
+                        if (solicitud.Moneda == "USD")
+                        {
+                            Solicitud.idRango = db.Rangos.Where(a => a.idTipoGasto == Solicitud.idTipoGasto && a.MontoMinimo <= Solicitud.Monto && a.MontoMaximo >= Solicitud.Monto).FirstOrDefault() == null ? 0 : db.Rangos.Where(a => a.idTipoGasto == Solicitud.idTipoGasto && a.MontoMinimo <= Solicitud.Monto && a.MontoMaximo >= Solicitud.Monto).FirstOrDefault().id;
+                        }
+                        else
+                        {
+                            var Fecha = DateTime.Now.Date;
+                            var TipoCambio = db.TipoCambios.Where(a => a.Moneda == "USD" && a.Fecha == Fecha).FirstOrDefault();
+
+                            Solicitud.idRango = db.Rangos.Where(a => a.idTipoGasto == Solicitud.idTipoGasto && a.MontoMinimo <= (Solicitud.Monto / TipoCambio.TipoCambio) && a.MontoMaximo >= (Solicitud.Monto / TipoCambio.TipoCambio)).FirstOrDefault() == null ? 0 : db.Rangos.Where(a => a.idTipoGasto == Solicitud.idTipoGasto && a.MontoMinimo <= (Solicitud.Monto / TipoCambio.TipoCambio) && a.MontoMaximo >= (Solicitud.Monto / TipoCambio.TipoCambio)).FirstOrDefault().id;
+
+
+                        }
+
+                        db.Solicitudes.Add(Solicitud);
+                        db.SaveChanges();
+
+                        Logs log = new Logs();
+                        log.idSolicitud = Solicitudes.id;
+                        log.Fecha = DateTime.Now;
+                        log.Detalle = "El usuario " + Usuario.Nombre + " ha excedido el monto aprobado en la Solicitud, por lo cual se crea una nueva, a la hora correspondiente";
+                        db.Logs.Add(log);
+                        db.SaveChanges();
+                    }
+
+                    if(solicitud.Status == "L" && Solicitudes.Status == "A")
+                    {
+                        Solicitudes.Status = solicitud.Status;
+
+                        Logs log = new Logs();
+                        log.idSolicitud = Solicitudes.id;
+                        log.Fecha = DateTime.Now;
+                        log.Detalle = "El usuario " + Usuario.Nombre + " ha enviado la solicitud de compra a espera de contabilización a la hora correspondiente";
+                        db.Logs.Add(log);
+                        db.SaveChanges();
+                        //Agregar los campos de ProcesadaSAP, DocEntry, Log de que se mando a SAP
+                    }
                     db.SaveChanges();
+
 
                 }
                 else
