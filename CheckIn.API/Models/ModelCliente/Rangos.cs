@@ -18,5 +18,6 @@ namespace CheckIn.API.Models.ModelCliente
         public int CantidadAprobaciones { get; set; }
         public bool Activo { get; set; }
         public decimal Margen { get; set; }
+        public int idUsuarioCreador { get; set; }
     }
 }

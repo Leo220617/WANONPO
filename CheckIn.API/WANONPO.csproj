@@ -279,6 +279,7 @@
     <Compile Include="Controllers\AprobacionesController.cs" />
     <Compile Include="Controllers\BitacoraErroresController.cs" />
     <Compile Include="Controllers\BitacoraLoginController.cs" />
+    <Compile Include="Controllers\ComprasController.cs" />
     <Compile Include="Controllers\Conexion.cs" />
     <Compile Include="Controllers\CuentasContablesController.cs" />
     <Compile Include="Controllers\DimensionesController.cs" />
@@ -287,6 +288,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\NormasRepartoController.cs" />
+    <Compile Include="Controllers\ProveedoresController.cs" />
     <Compile Include="Controllers\RangosController.cs" />
     <Compile Include="Controllers\RangosLoginController.cs" />
     <Compile Include="Controllers\RolesController.cs" />
@@ -307,6 +309,13 @@
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AdjuntosViewModel.cs" />
+    <Compile Include="Models\AsignacionViewModel.cs" />
+    <Compile Include="Models\ComprasViewModel.cs" />
+    <Compile Include="Models\ModelCliente\BandejaEntrada.cs" />
+    <Compile Include="Models\ModelCliente\CorreosRecepcion.cs" />
+    <Compile Include="Models\ModelCliente\DetCompras.cs" />
+    <Compile Include="Models\ModelCliente\EncCompras.cs" />
+    <Compile Include="Models\ModelCliente\EncComprasViewModel.cs" />
     <Compile Include="Models\ModelCliente\Facturas.cs" />
     <Compile Include="Models\FacturasViewModel.cs" />
     <Compile Include="Models\Filtros.cs" />
@@ -323,9 +332,11 @@
     <Compile Include="Models\ModelCliente\Gastos.cs" />
     <Compile Include="Models\ModelCliente\Login.cs" />
     <Compile Include="Models\ModelCliente\Logs.cs" />
+    <Compile Include="Models\ModelCliente\LogsRangos.cs" />
     <Compile Include="Models\ModelCliente\ModelCliente.cs" />
     <Compile Include="Models\ModelCliente\NormasReparto.cs" />
     <Compile Include="Models\ModelCliente\Parametros.cs" />
+    <Compile Include="Models\ModelCliente\Proveedores.cs" />
     <Compile Include="Models\ModelCliente\Rangos.cs" />
     <Compile Include="Models\ModelCliente\RangosLogin.cs" />
     <Compile Include="Models\ModelCliente\Roles.cs" />

@@ -23,7 +23,18 @@ namespace CheckIn.API.Controllers
             try
             {
                 G.AbrirConexionAPP(out db);
-                var Rango = db.Rangos.ToList();
+                var Rango = db.Rangos.Select(a => new
+                {
+                    a.id,
+                    a.idTipoGasto,
+                    a.Nombre,
+                    a.MontoMinimo,
+                    a.MontoMaximo,
+                    a.CantidadAprobaciones,
+                    a.Activo,
+                    a.Margen,
+                    LogsRangos = db.LogsRangos.Where(b => b.idEncabezado == a.id).ToList()
+                }).ToList();
 
 
 
@@ -42,7 +53,6 @@ namespace CheckIn.API.Controllers
                 return Request.CreateResponse(HttpStatusCode.InternalServerError, ex);
             }
         }
-
         [Route("api/Rangos/Consultar")]
         public HttpResponseMessage GetOne([FromUri]int id)
         {
@@ -51,12 +61,25 @@ namespace CheckIn.API.Controllers
                 G.AbrirConexionAPP(out db);
 
 
-                var Rango = db.Rangos.Where(a => a.id == id).FirstOrDefault();
+                var Rango = db.Rangos.Select(a => new
+                {
+
+                    a.id,
+                    a.idTipoGasto,
+                    a.Nombre,
+                    a.MontoMinimo,
+                    a.MontoMaximo,
+                    a.CantidadAprobaciones,
+                    a.Activo,
+                    a.Margen,
+                    LogsRangos = db.LogsRangos.Where(b => b.idEncabezado == a.id).ToList()
+
+                }).Where(a => a.id == id).FirstOrDefault();
 
 
                 if (Rango == null)
                 {
-                    throw new Exception("Este rango no se encuentra registrada");
+                    throw new Exception("Este solicitud no se encuentra registrada");
                 }
                 G.CerrarConexionAPP(db);
                 return Request.CreateResponse(HttpStatusCode.OK, Rango);
@@ -67,6 +90,8 @@ namespace CheckIn.API.Controllers
                 return Request.CreateResponse(HttpStatusCode.InternalServerError, ex);
             }
         }
+
+
 
         [HttpPost]
         public HttpResponseMessage Post([FromBody] Rangos rango)
@@ -126,15 +151,78 @@ namespace CheckIn.API.Controllers
                 if (Rangos != null)
                 {
                     db.Entry(Rangos).State = EntityState.Modified;
-                    Rangos.idTipoGasto = rango.idTipoGasto;
+                    var Usuario = db.Login.Where(a => a.id == rango.idUsuarioCreador).FirstOrDefault();
+                   
                     Rangos.Nombre = rango.Nombre;
-                    Rangos.MontoMinimo = rango.MontoMinimo;
-                    Rangos.MontoMaximo = rango.MontoMaximo;
-                    Rangos.CantidadAprobaciones = rango.CantidadAprobaciones;
-                    Rangos.Margen = rango.Margen;
+
+                    if (rango.idTipoGasto > 0 && rango.idTipoGasto != Rangos.idTipoGasto)
+                    {
+                        var TipoGasto = db.Gastos.Where(a => a.idTipoGasto == Rangos.idTipoGasto).FirstOrDefault();
+                        var TipoGastoN = db.Gastos.Where(a => a.idTipoGasto == rango.idTipoGasto).FirstOrDefault();
+                        LogsRangos log = new LogsRangos();
+                        log.idEncabezado = Rangos.id;
+                        log.Fecha = DateTime.Now;
+                        log.Detalle = "El usuario " + Usuario.Nombre + " ha modificado el tipo de gasto, valor anterior: " + Rangos.idTipoGasto + " - " + TipoGasto.Nombre + " nuevo valor: " + rango.idTipoGasto + " - " + TipoGastoN.Nombre;
+                        db.LogsRangos.Add(log);
+                        db.SaveChanges();
+                        Rangos.idTipoGasto = rango.idTipoGasto;
+                    }
+
+                    if (rango.MontoMinimo > 0 && rango.MontoMinimo != Rangos.MontoMinimo)
+                    {
+                       
+                        LogsRangos log = new LogsRangos();
+                        log.idEncabezado = Rangos.id;
+                        log.Fecha = DateTime.Now;
+                        log.Detalle = "El usuario " + Usuario.Nombre + " ha modificado el monto mínimo, valor anterior: " + Rangos.MontoMinimo.ToString("F2") +  " nuevo valor: " + rango.MontoMinimo.ToString("F2");
+                        db.LogsRangos.Add(log);
+                        db.SaveChanges();
+                        Rangos.MontoMinimo = rango.MontoMinimo;
+                    }
+
+                    if (rango.MontoMaximo > 0 && rango.MontoMaximo != Rangos.MontoMaximo)
+                    {
+                        
+                        LogsRangos log = new LogsRangos();
+                        log.idEncabezado = Rangos.id;
+                        log.Fecha = DateTime.Now;
+                        log.Detalle = "El usuario " + Usuario.Nombre + " ha modificado el monto máximo, valor anterior: " + Rangos.MontoMaximo.ToString("F2") + " nuevo valor: " + rango.MontoMaximo.ToString("F2");
+                        db.LogsRangos.Add(log);
+                        db.SaveChanges();
+                        Rangos.MontoMaximo = rango.MontoMaximo;
+                    }
+
+                    if (rango.CantidadAprobaciones > 0 && rango.CantidadAprobaciones != Rangos.CantidadAprobaciones)
+                    {
+                       
+                        LogsRangos log = new LogsRangos();
+                        log.idEncabezado = Rangos.id;
+                        log.Fecha = DateTime.Now;
+                        log.Detalle = "El usuario " + Usuario.Nombre + " ha modificado la cantidad de aprobadores, valor anterior: " + Rangos.CantidadAprobaciones + " nuevo valor: " + rango.CantidadAprobaciones;
+                        db.LogsRangos.Add(log);
+                        db.SaveChanges();
+                        Rangos.CantidadAprobaciones = rango.CantidadAprobaciones;
+                    }
+
+
+                    if (rango.Margen > 0 && rango.Margen != Rangos.Margen)
+                    {
+                      
+                        LogsRangos log = new LogsRangos();
+                        log.idEncabezado = Rangos.id;
+                        log.Fecha = DateTime.Now;
+                        log.Detalle = "El usuario " + Usuario.Nombre + " ha modificado el margen, valor anterior: " + Rangos.Margen.ToString("F2") + "% nuevo valor: " + rango.Margen.ToString("F2") + "%";
+                        db.LogsRangos.Add(log);
+                        db.SaveChanges();
+                        Rangos.Margen = rango.Margen;
+                    }
+
+                    
                     Rangos.Activo = true;
                     db.SaveChanges();
 
+             
+                   
                 }
                 else
                 {

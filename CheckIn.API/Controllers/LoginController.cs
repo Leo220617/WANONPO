@@ -355,10 +355,10 @@ namespace CheckIn.API.Controllers
                     {
                         User.idRol = usuario.idRol;
                     }
-                    if(usuario.idLoginAceptacion > 0)
-                    {
-                        User.idLoginAceptacion = usuario.idLoginAceptacion;
-                    }
+                    //if(usuario.idLoginAceptacion > 0)
+                    //{
+                    //    User.idLoginAceptacion = usuario.idLoginAceptacion;
+                    //}
               
 
                     if (!string.IsNullOrEmpty(usuario.CardCode))

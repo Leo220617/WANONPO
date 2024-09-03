@@ -42,6 +42,12 @@ namespace CheckIn.API.Models.ModelCliente
         public virtual DbSet<Adjuntos> Adjuntos { get; set; }
         public virtual DbSet<Facturas> Facturas { get; set; }
         public virtual DbSet<Logs> Logs { get; set; }
+        public virtual DbSet<LogsRangos> LogsRangos { get; set; }
+        public virtual DbSet<EncCompras> EncCompras { get; set; }
+        public virtual DbSet<BandejaEntrada> BandejaEntrada { get; set; }
+        public virtual DbSet<DetCompras> DetCompras { get; set; }
+        public virtual DbSet<CorreosRecepcion> CorreosRecepcion { get; set; }
+        public virtual DbSet<Proveedores> Proveedores { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
