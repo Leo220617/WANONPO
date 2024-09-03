@@ -2510,44 +2510,6 @@ namespace CheckIn.API.Controllers
                 }).Where(a => (filtro.FechaInicio != time ? a.FecFactura >= filtro.FechaInicio && a.FecFactura <= filtro.FechaFinal : true) && (!string.IsNullOrEmpty(filtro.Texto) ? a.ConsecutivoHacienda.ToString().Contains(filtro.Texto.ToUpper()) ||
                     a.ClaveHacienda.ToString().Contains(filtro.Texto.ToUpper()) : true) && (filtro.Asignados ? (filtro.Codigo2 > 0 ? a.idLoginAsignado == null || a.idLoginAsignado == 0 || a.idLoginAsignado == filtro.Codigo2 : a.idLoginAsignado == null || a.idLoginAsignado == 0) : true)).ToList();
 
-                //if (!string.IsNullOrEmpty(filtro.Texto))
-                //{
-
-
-                //    EncCompras = EncCompras.Where(a => a.ConsecutivoHacienda.ToString().Contains(filtro.Texto.ToUpper()) ||
-                //    a.ClaveHacienda.ToString().Contains(filtro.Texto.ToUpper())
-                //    ).ToList();
-                //}
-
-
-
-                //if (filtro.Asignados)
-
-                //{
-                //    if (filtro.Codigo2 > 0)
-                //    {
-
-                //        EncCompras = EncCompras.Where(a => a.idLoginAsignado == null || a.idLoginAsignado == 0 || a.idLoginAsignado == filtro.Codigo2).ToList();
-
-
-
-                //    }
-                //    else
-                //    {
-                //        EncCompras = EncCompras.Where(a => a.idLoginAsignado == null || a.idLoginAsignado == 0).ToList();
-                //    }
-                //}
-
-                if (filtro.Codigo3 > 0)
-                {
-                    //EncCompras = EncCompras.Where(a => a.idCierre == filtro.Codigo3).ToList();
-                }
-
-
-
-
-
-
                 G.CerrarConexionAPP(db);
                 return Request.CreateResponse(HttpStatusCode.OK, EncCompras);
 
