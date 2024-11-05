@@ -43,7 +43,8 @@ namespace CheckIn.API.Controllers
                     a.ComentariosAprobador,
                     a.TotalFacturas,
                     Facturas = db.Facturas.Where(b => b.idSolicitud == a.id).ToList(),
-                    Logs = db.Logs.Where(e => e.idSolicitud == a.id).ToList()
+                    Logs = db.Logs.Where(e => e.idSolicitud == a.id).ToList(),
+                    Aprobaciones = db.Aprobaciones.Where(c => c.idSolicitud == a.id).OrderBy(c => c.id).ToList()
 
                 }).Where(a => (filtro.FechaInicio != time ? a.Fecha >= filtro.FechaInicio : true) && (filtro.FechaFinal != time ? a.Fecha <= filtro.FechaFinal : true)).ToList();
 

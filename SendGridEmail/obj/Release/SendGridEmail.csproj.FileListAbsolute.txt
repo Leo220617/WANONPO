@@ -28,3 +28,18 @@ C:\Users\steve\Documents\Repositorios DYD\WANONPO\SendGridEmail\obj\Release\Send
 C:\Users\steve\Documents\Repositorios DYD\WANONPO\SendGridEmail\obj\Release\SendGridEmail.csproj.CopyComplete
 C:\Users\steve\Documents\Repositorios DYD\WANONPO\SendGridEmail\obj\Release\SendGridEmail.dll
 C:\Users\steve\Documents\Repositorios DYD\WANONPO\SendGridEmail\obj\Release\SendGridEmail.pdb
+C:\Users\Steven Rodriguez\Documents\Repositorios D&D\WANONPO\SendGridEmail\bin\Release\SendGridEmail.dll.config
+C:\Users\Steven Rodriguez\Documents\Repositorios D&D\WANONPO\SendGridEmail\bin\Release\SendGridEmail.dll
+C:\Users\Steven Rodriguez\Documents\Repositorios D&D\WANONPO\SendGridEmail\bin\Release\SendGridEmail.pdb
+C:\Users\Steven Rodriguez\Documents\Repositorios D&D\WANONPO\SendGridEmail\bin\Release\Newtonsoft.Json.dll
+C:\Users\Steven Rodriguez\Documents\Repositorios D&D\WANONPO\SendGridEmail\bin\Release\SendGrid.dll
+C:\Users\Steven Rodriguez\Documents\Repositorios D&D\WANONPO\SendGridEmail\bin\Release\SendGrid.SmtpApi.dll
+C:\Users\Steven Rodriguez\Documents\Repositorios D&D\WANONPO\SendGridEmail\bin\Release\SendGridMail.dll
+C:\Users\Steven Rodriguez\Documents\Repositorios D&D\WANONPO\SendGridEmail\bin\Release\System.Net.Http.Formatting.dll
+C:\Users\Steven Rodriguez\Documents\Repositorios D&D\WANONPO\SendGridEmail\bin\Release\Newtonsoft.Json.xml
+C:\Users\Steven Rodriguez\Documents\Repositorios D&D\WANONPO\SendGridEmail\bin\Release\System.Net.Http.Formatting.xml
+C:\Users\Steven Rodriguez\Documents\Repositorios D&D\WANONPO\SendGridEmail\obj\Release\SendGridEmail.csprojAssemblyReference.cache
+C:\Users\Steven Rodriguez\Documents\Repositorios D&D\WANONPO\SendGridEmail\obj\Release\SendGridEmail.csproj.CoreCompileInputs.cache
+C:\Users\Steven Rodriguez\Documents\Repositorios D&D\WANONPO\SendGridEmail\obj\Release\SendGridEmail.csproj.CopyComplete
+C:\Users\Steven Rodriguez\Documents\Repositorios D&D\WANONPO\SendGridEmail\obj\Release\SendGridEmail.dll
+C:\Users\Steven Rodriguez\Documents\Repositorios D&D\WANONPO\SendGridEmail\obj\Release\SendGridEmail.pdb

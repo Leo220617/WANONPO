@@ -28,3 +28,18 @@ C:\Users\steve\Documents\Repositorios DYD\WANONPO\SendGridEmail\obj\Debug\SendGr
 C:\Users\steve\Documents\Repositorios DYD\WANONPO\SendGridEmail\obj\Debug\SendGridEmail.csproj.CopyComplete
 C:\Users\steve\Documents\Repositorios DYD\WANONPO\SendGridEmail\obj\Debug\SendGridEmail.dll
 C:\Users\steve\Documents\Repositorios DYD\WANONPO\SendGridEmail\obj\Debug\SendGridEmail.pdb
+C:\Users\Steven Rodriguez\Documents\Repositorios D&D\WANONPO\SendGridEmail\bin\Debug\SendGridEmail.dll.config
+C:\Users\Steven Rodriguez\Documents\Repositorios D&D\WANONPO\SendGridEmail\bin\Debug\SendGridEmail.dll
+C:\Users\Steven Rodriguez\Documents\Repositorios D&D\WANONPO\SendGridEmail\bin\Debug\SendGridEmail.pdb
+C:\Users\Steven Rodriguez\Documents\Repositorios D&D\WANONPO\SendGridEmail\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Steven Rodriguez\Documents\Repositorios D&D\WANONPO\SendGridEmail\bin\Debug\SendGrid.dll
+C:\Users\Steven Rodriguez\Documents\Repositorios D&D\WANONPO\SendGridEmail\bin\Debug\SendGrid.SmtpApi.dll
+C:\Users\Steven Rodriguez\Documents\Repositorios D&D\WANONPO\SendGridEmail\bin\Debug\SendGridMail.dll
+C:\Users\Steven Rodriguez\Documents\Repositorios D&D\WANONPO\SendGridEmail\bin\Debug\System.Net.Http.Formatting.dll
+C:\Users\Steven Rodriguez\Documents\Repositorios D&D\WANONPO\SendGridEmail\bin\Debug\Newtonsoft.Json.xml
+C:\Users\Steven Rodriguez\Documents\Repositorios D&D\WANONPO\SendGridEmail\bin\Debug\System.Net.Http.Formatting.xml
+C:\Users\Steven Rodriguez\Documents\Repositorios D&D\WANONPO\SendGridEmail\obj\Debug\SendGridEmail.csprojAssemblyReference.cache
+C:\Users\Steven Rodriguez\Documents\Repositorios D&D\WANONPO\SendGridEmail\obj\Debug\SendGridEmail.csproj.CoreCompileInputs.cache
+C:\Users\Steven Rodriguez\Documents\Repositorios D&D\WANONPO\SendGridEmail\obj\Debug\SendGridEmail.csproj.CopyComplete
+C:\Users\Steven Rodriguez\Documents\Repositorios D&D\WANONPO\SendGridEmail\obj\Debug\SendGridEmail.dll
+C:\Users\Steven Rodriguez\Documents\Repositorios D&D\WANONPO\SendGridEmail\obj\Debug\SendGridEmail.pdb
