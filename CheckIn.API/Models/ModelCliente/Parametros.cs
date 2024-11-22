@@ -38,5 +38,6 @@ namespace CheckIn.API.Models.ModelCliente
         public int DiasVencimiento { get; set; }
 
         public string SQLTipoCambio { get; set; }
+        public string SQLProveedores { get; set; }
     }
 }

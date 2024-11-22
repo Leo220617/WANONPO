@@ -16,5 +16,6 @@ namespace CheckIn.API.Models
         public string Comentarios { get; set; }
         public string PDF { get; set; }
         public decimal Monto { get; set; }
+        public string CardCode { get; set; }
     }
 }

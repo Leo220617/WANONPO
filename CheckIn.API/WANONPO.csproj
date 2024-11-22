@@ -291,6 +291,7 @@
     <Compile Include="Controllers\ProveedoresController.cs" />
     <Compile Include="Controllers\RangosController.cs" />
     <Compile Include="Controllers\RangosLoginController.cs" />
+    <Compile Include="Controllers\RegistroProveedoresController.cs" />
     <Compile Include="Controllers\RolesController.cs" />
     <Compile Include="Controllers\SeguridadModulosController.cs" />
     <Compile Include="Controllers\SeguridadRolesModulosController.cs" />
@@ -339,6 +340,7 @@
     <Compile Include="Models\ModelCliente\Proveedores.cs" />
     <Compile Include="Models\ModelCliente\Rangos.cs" />
     <Compile Include="Models\ModelCliente\RangosLogin.cs" />
+    <Compile Include="Models\ModelCliente\RegistroProveedores.cs" />
     <Compile Include="Models\ModelCliente\Roles.cs" />
     <Compile Include="Models\ModelCliente\SeguridadModulos.cs" />
     <Compile Include="Models\ModelCliente\SeguridadRolesModulos.cs" />

@@ -48,7 +48,7 @@ namespace CheckIn.API.Models.ModelCliente
         public virtual DbSet<DetCompras> DetCompras { get; set; }
         public virtual DbSet<CorreosRecepcion> CorreosRecepcion { get; set; }
         public virtual DbSet<Proveedores> Proveedores { get; set; }
-
+        public virtual DbSet<RegistroProveedores> RegistroProveedores { get; set; }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<CuentasContables>()

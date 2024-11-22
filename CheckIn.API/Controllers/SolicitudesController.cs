@@ -355,11 +355,11 @@ namespace CheckIn.API.Controllers
 
                         }
                     }
-                    else if(solicitud.Status == "R" || solicitud.Status == "G") // Si viene R de rechazado
+                    else if (solicitud.Status == "R" || solicitud.Status == "G") // Si viene R de rechazado
                     {
                         var Aprobaciones = db.Aprobaciones.Where(a => a.idSolicitud == Solicitudes.id).Count();
 
-                        if (solicitud.Status == "G")
+                        if (solicitud.Status == "G" && solicitud.Facturas == null)
                         {
 
                             Logs log = new Logs();
@@ -369,7 +369,7 @@ namespace CheckIn.API.Controllers
                             db.Logs.Add(log);
                             db.SaveChanges();
                         }
-                        else
+                        else if(solicitud.Facturas == null)
                         {
                             var UsuarioAprobador = db.Login.Where(a => a.id == solicitud.idUsuarioAprobador).FirstOrDefault();
                             Logs log = new Logs();
@@ -380,7 +380,7 @@ namespace CheckIn.API.Controllers
                             db.SaveChanges();
                         }
 
-                        if (Aprobaciones > 0)
+                        if (Aprobaciones > 0 && solicitud.Facturas == null)
                         {
                             var AprobacionAnterior = db.Aprobaciones.Where(a => a.idSolicitud == Solicitudes.id).FirstOrDefault();
                             if (AprobacionAnterior.idLogin != solicitud.idUsuarioAprobador)
@@ -393,9 +393,14 @@ namespace CheckIn.API.Controllers
                                 throw new Exception("Ya esta solicitud ha sido modificada por este usuario");
                             }
                         }
-                        else
+                        else if (solicitud.Facturas == null)
                         {
                             Solicitudes.Status = solicitud.Status;
+
+                        }
+                        else if (Solicitudes.Status == "A" && solicitud.Facturas != null)
+                        {
+                            Solicitudes.Status = "A";
                         }
 
                     }
@@ -425,6 +430,7 @@ namespace CheckIn.API.Controllers
                             Factura.CedulaProveedor = factura.CedulaProveedor;
                             Factura.NomProveedor = factura.NomProveedor;
                             Factura.NumFactura = factura.NumFactura;
+                            Factura.CardCode = factura.CardCode;
                             Factura.Fecha = factura.Fecha;
                             Factura.Comentarios = factura.Comentarios;
                             byte[] hex = Convert.FromBase64String(factura.PDF.Replace("data:application/pdf;base64,", ""));
@@ -501,7 +507,7 @@ namespace CheckIn.API.Controllers
                         db.SaveChanges();
                     }
 
-                    if(solicitud.Status == "L" && Solicitudes.Status == "A")
+                    if (solicitud.Status == "L" && Solicitudes.Status == "A")
                     {
                         Solicitudes.Status = solicitud.Status;
 
