@@ -275,6 +275,7 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
+    <Compile Include="Content\ParametrosController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AprobacionesController.cs" />
     <Compile Include="Controllers\BitacoraErroresController.cs" />
@@ -313,6 +314,7 @@
     <Compile Include="Models\AsignacionViewModel.cs" />
     <Compile Include="Models\ComprasViewModel.cs" />
     <Compile Include="Models\ModelCliente\BandejaEntrada.cs" />
+    <Compile Include="Models\ModelCliente\CorreoEnvio.cs" />
     <Compile Include="Models\ModelCliente\CorreosRecepcion.cs" />
     <Compile Include="Models\ModelCliente\DetCompras.cs" />
     <Compile Include="Models\ModelCliente\EncCompras.cs" />

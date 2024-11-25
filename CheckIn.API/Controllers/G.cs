@@ -26,6 +26,7 @@ using System.IO.Compression;
 using System.Text.RegularExpressions;
 using System.Xml.Linq;
 using System.Xml;
+using System.Net.Mail;
 
 namespace CheckIn.API.Controllers
 {
@@ -475,6 +476,74 @@ namespace CheckIn.API.Controllers
                     return "0";
                 else
                     return "";
+            }
+        }
+
+        public static bool SendV2(string para, string copia, string copiaOculta, string de, string displayName, string asunto,
+         string html, string HostServer, int Puerto, bool EnableSSL, string UserName, string Password, List<Attachment> ArchivosAdjuntos = null)
+        {
+            try
+            {
+
+                MailMessage mail = new MailMessage();
+                mail.Subject = asunto;
+                mail.Body = html;
+                mail.IsBodyHtml = true;
+
+                // * mail.From = new MailAddress(WebConfigurationManager.AppSettings["UserName"], displayName);
+                mail.From = new MailAddress(de, displayName);
+
+                var paraList = para.Split(';');
+                foreach (var p in paraList)
+                {
+                    if (p.Trim().Length > 0)
+                        mail.To.Add(p.Trim());
+                }
+                var ccList = copia.Split(';');
+                foreach (var cc in ccList)
+                {
+                    if (cc.Trim().Length > 0)
+                        mail.CC.Add(cc.Trim());
+                }
+                var ccoList = copiaOculta.Split(';');
+                foreach (var cco in ccoList)
+                {
+                    if (cco.Trim().Length > 0)
+                        mail.Bcc.Add(cco.Trim());
+                }
+
+
+
+                if (ArchivosAdjuntos != null)
+                {
+                    foreach (var archivo in ArchivosAdjuntos)
+                    {
+                        //if (!string.IsNullOrEmpty(archivo))
+                        mail.Attachments.Add(archivo);
+                    }
+                }
+
+
+                SmtpClient client = new SmtpClient();
+                client.Host = HostServer; // WebConfigurationManager.AppSettings["HostName"];
+                client.Port = Puerto; // int.Parse(WebConfigurationManager.AppSettings["Port"].ToString());
+                client.UseDefaultCredentials = false;
+                client.DeliveryMethod = SmtpDeliveryMethod.Network;
+                client.EnableSsl = EnableSSL; // bool.Parse(WebConfigurationManager.AppSettings["EnableSsl"]);
+                client.Credentials = new NetworkCredential(UserName, Password);
+
+                client.Send(mail);
+                client.Dispose();
+                mail.Dispose();
+
+                return true;
+
+            }
+            catch (Exception ex)
+            {
+
+
+                return false;
             }
         }
     }

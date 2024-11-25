@@ -39,5 +39,7 @@ namespace CheckIn.API.Models.ModelCliente
 
         public string SQLTipoCambio { get; set; }
         public string SQLProveedores { get; set; }
+        public string CorreoProveedores { get; set; }
+
     }
 }
