@@ -17,5 +17,6 @@ namespace CheckIn.API.Models
         public byte[] PDF { get; set; }
         public decimal Monto { get; set; }
         public string CardCode { get; set; }
+        public bool ProcesadoSAP { get; set; }
     }
 }

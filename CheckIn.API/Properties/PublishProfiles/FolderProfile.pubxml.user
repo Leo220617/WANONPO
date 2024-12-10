@@ -85,10 +85,10 @@ edite el archivo MSBuild. Visite https://go.microsoft.com/fwlink/?LinkID=208121 
       <publishTime>09/10/2024 16:36:54</publishTime>
     </File>
     <File Include="bin/CheckIn.API.dll">
-      <publishTime>12/06/2024 08:50:15</publishTime>
+      <publishTime>12/10/2024 09:29:31</publishTime>
     </File>
     <File Include="bin/CheckIn.API.pdb">
-      <publishTime>12/06/2024 08:50:15</publishTime>
+      <publishTime>12/10/2024 09:29:31</publishTime>
     </File>
     <File Include="bin/de/PdfSharp.Charting.resources.dll">
       <publishTime>09/10/2024 16:37:07</publishTime>
@@ -337,13 +337,13 @@ edite el archivo MSBuild. Visite https://go.microsoft.com/fwlink/?LinkID=208121 
       <publishTime>09/10/2024 16:37:11</publishTime>
     </File>
     <File Include="bin/SendGridEmail.dll">
-      <publishTime>05/12/2024 10:32:30</publishTime>
+      <publishTime>12/05/2024 10:32:30</publishTime>
     </File>
     <File Include="bin/SendGridEmail.dll.config">
       <publishTime>09/10/2024 16:36:53</publishTime>
     </File>
     <File Include="bin/SendGridEmail.pdb">
-      <publishTime>05/12/2024 10:32:30</publishTime>
+      <publishTime>12/05/2024 10:32:30</publishTime>
     </File>
     <File Include="bin/SendGridMail.dll">
       <publishTime>09/10/2024 16:37:11</publishTime>
@@ -505,7 +505,7 @@ edite el archivo MSBuild. Visite https://go.microsoft.com/fwlink/?LinkID=208121 
       <publishTime>09/10/2024 16:36:36</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>11/05/2024 11:18:53</publishTime>
+      <publishTime>05/11/2024 11:18:53</publishTime>
     </File>
   </ItemGroup>
 </Project>

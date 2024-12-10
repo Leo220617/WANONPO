@@ -98,6 +98,7 @@ namespace CheckIn.API.Controllers
                     a.Comentarios,
                     a.ComentariosAprobador,
                     a.TotalFacturas,
+                    a.ProcesadoSAP,
                     Facturas = db.Facturas.Where(b => b.idSolicitud == a.id).ToList(),
                     Logs = db.Logs.Where(e => e.idSolicitud == a.id).ToList()
 
@@ -141,6 +142,7 @@ namespace CheckIn.API.Controllers
                     Solicitud.BaseEntry = 0;
                     Solicitud.ComentariosAprobador = solicitud.ComentariosAprobador;
                     Solicitud.TotalFacturas = 0;
+                    Solicitud.ProcesadoSAP = false;
                     if (solicitud.Moneda == "USD")
                     {
                         Solicitud.idRango = db.Rangos.Where(a => a.idTipoGasto == solicitud.idTipoGasto && a.MontoMinimo <= solicitud.Monto && a.MontoMaximo >= solicitud.Monto).FirstOrDefault() == null ? 0 : db.Rangos.Where(a => a.idTipoGasto == solicitud.idTipoGasto && a.MontoMinimo <= solicitud.Monto && a.MontoMaximo >= solicitud.Monto).FirstOrDefault().id;
@@ -433,6 +435,7 @@ namespace CheckIn.API.Controllers
                             Factura.CardCode = factura.CardCode;
                             Factura.Fecha = factura.Fecha;
                             Factura.Comentarios = factura.Comentarios;
+                            Factura.ProcesadoSAP = false;
                             if (factura.PDF != null)
                             {
                                 byte[] hex = Convert.FromBase64String(factura.PDF.Replace("data:application/pdf;base64,", ""));
@@ -486,6 +489,7 @@ namespace CheckIn.API.Controllers
                         Solicitud.Moneda = Solicitudes.Moneda;
                         Solicitud.ComentariosAprobador = "";
                         Solicitud.TotalFacturas = 0;
+                        Solicitud.ProcesadoSAP = false;
                         if (solicitud.Moneda == "USD")
                         {
                             Solicitud.idRango = db.Rangos.Where(a => a.idTipoGasto == Solicitud.idTipoGasto && a.MontoMinimo <= Solicitud.Monto && a.MontoMaximo >= Solicitud.Monto).FirstOrDefault() == null ? 0 : db.Rangos.Where(a => a.idTipoGasto == Solicitud.idTipoGasto && a.MontoMinimo <= Solicitud.Monto && a.MontoMaximo >= Solicitud.Monto).FirstOrDefault().id;

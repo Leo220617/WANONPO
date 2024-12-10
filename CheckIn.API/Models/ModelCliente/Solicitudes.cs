@@ -22,6 +22,7 @@ namespace CheckIn.API.Models.ModelCliente
         public string Comentarios { get; set; }
         public string ComentariosAprobador { get; set; }
         public decimal TotalFacturas { get; set; }
+        public bool ProcesadoSAP { get; set; }
 
     }
 }
