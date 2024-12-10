@@ -433,8 +433,12 @@ namespace CheckIn.API.Controllers
                             Factura.CardCode = factura.CardCode;
                             Factura.Fecha = factura.Fecha;
                             Factura.Comentarios = factura.Comentarios;
-                            byte[] hex = Convert.FromBase64String(factura.PDF.Replace("data:application/pdf;base64,", ""));
-                            Factura.PDF = hex;
+                            if (factura.PDF != null)
+                            {
+                                byte[] hex = Convert.FromBase64String(factura.PDF.Replace("data:application/pdf;base64,", ""));
+                                Factura.PDF = hex;
+                            }
+                       
                             Factura.Monto = factura.Monto;
                             TotalFacturas += factura.Monto;
                             db.Facturas.Add(Factura);
